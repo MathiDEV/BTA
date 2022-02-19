@@ -61,6 +61,22 @@ exports.getAllAutomation = (req, res, next) => {
 
     }
 }
+
+exports.getAllAutomation_m = (req, res, next) => {
+    const code = req.body.code
+
+    if (check_validity(code)) {
+        db.execute('SELECT id, name, color FROM `actions` WHERE code = ?', [code], function (err, results, fields) {
+            if (results[0]) {
+                res.status(202).json(results);
+            }
+            else
+                res.status(400).json({ msg: "error processing" });
+        })
+
+    }
+}
+
 exports.trigger_up = (req, res, next) => {
     const code = req.body.code
     const id = req.body.id

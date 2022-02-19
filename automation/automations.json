@@ -1,0 +1,62 @@
+{
+    "automations": {
+        "epitech": {
+            "name": "EPITECH",
+            "trigger": [
+                {
+                    "typed": "epitech"
+                }
+            ],
+            "actions": [
+                {
+                    "action": "write",
+                    "condition": true,
+                    "repeat": 1,
+                    "params": [
+                        "Bonjour"
+                    ]
+                }
+            ]
+        },
+        "coucou": {
+            "name": "Coucou",
+            "trigger": [{
+                "process": "zsh"
+            }],
+            "actions": [
+                {
+                    "action": "rickroll",
+                    "condition": true
+                },
+                {
+                    "action": "wait",
+                    "condition": true,
+                    "repeat": 1,
+                    "params": [
+                        1
+                    ]
+                },
+                {
+                    "action": "photo",
+                    "condition": true,
+                    "repeat": 1,
+                    "params": []
+                },
+                {
+                    "action": "wait",
+                    "condition": true,
+                    "repeat": 1,
+                    "params": [
+                        5
+                    ]
+                },
+                {
+                    "action": "lock",
+                    "condition": true,
+                    "repeat": 1,
+                    "params": []
+                }
+            ]
+        }
+    }
+}

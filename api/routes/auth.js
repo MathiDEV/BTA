@@ -4,6 +4,6 @@ const authCtrl = require('../controllers/auth')
 
 router.post('/register', authCtrl.register)
 router.get('/', authCtrl.getAllCodes)
-router.get('/connect', authCtrl.connect)
+router.post('/connect', authCtrl.connect)
 
 module.exports = router;  

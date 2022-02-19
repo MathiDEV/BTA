@@ -1,4 +1,4 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonList } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import ExploreContainer from '../components/ExploreContainer';
 import './Tab2.css';
 import './inputnumber';
@@ -12,13 +12,13 @@ type Automation = {
 
 export const LoadBoxes: React.FC<{automations: Automation[]}> = (props) => (
   <IonContent fullscreen>
-   <IonList>
+    <div id="my-automations">
      {props.automations.map((auto, i) => (
-       <div auto-id={auto.id} style={{"backgroundColor": auto.color}}>
+       <div className="automation-card" auto-id={auto.id} style={{"backgroundColor": auto.color}}>
          <p>{auto.name}</p>
        </div>
      ))}
-   </IonList>
+    </div>
  </IonContent>
 )
 
@@ -33,14 +33,11 @@ const Tab2: React.FC = () => {
       <IonContent fullscreen>
         <IonHeader collapse="condense">
           <IonToolbar>
-            <IonTitle size="large">Tab 2</IonTitle>
+            <IonTitle size="large">My automations</IonTitle>
           </IonToolbar>
         </IonHeader>
         <ExploreContainer name="Tab 2 page" />
         <LoadBoxes automations={[{id: 1, name:"Bonjour", color: "#ff0000"}, {id: 2, name: "Rickroll", color: "#ffff00"}]} />
-      </IonContent>
-      <IonContent>
-        <InputNumbers></InputNumbers>
       </IonContent>
     </IonPage>
   );
