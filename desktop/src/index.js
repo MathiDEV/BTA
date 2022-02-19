@@ -7,7 +7,7 @@ const createWindow = (width, height) => {
         height: height,
         minWidth: 800,
         minHeight: 600,
-        icon: 'assets/icon_bta.png',
+        icon: __dirname + '/assets/icon_bta.png',
         webPreferences: {
             nodeIntegration: true
         }
