@@ -22,7 +22,7 @@ exports.getAllCodes = (req, res, next) => {
             return
         }
         else
-            res.status(400).json({ err });
+            res.status(400).json({ error: "error" });
     })
 }
 
