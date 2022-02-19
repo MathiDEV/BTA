@@ -1,0 +1,7 @@
+{
+  "name": "BTA",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
