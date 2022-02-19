@@ -1,6 +1,10 @@
 module.exports = {
-    colors: {
-        'navbar_color': '#252525',
-        'bg-dark': '#141414',
+    theme: {
+        extend: {
+            colors: {
+                'navbar_color': '#252525',
+                'dark': '#141414',
+            }
+        }
     }
 }
