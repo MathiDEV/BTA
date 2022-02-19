@@ -5,6 +5,8 @@ const createWindow = (width, height) => {
         autoHideMenuBar: true,
         width: width,
         height: height,
+        minWidth: 800,
+        minHeight: 600,
         webPreferences: {
             nodeIntegration: true
         }
@@ -13,7 +15,7 @@ const createWindow = (width, height) => {
 }
 
 app.whenReady().then(() => {
-    const window = createWindow(1280, 720);
+    const window = createWindow(1280, 800);
     window.loadFile('static/index.html');
 });
 
