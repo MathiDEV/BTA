@@ -11,5 +11,10 @@
   "license": "ISC",
   "devDependencies": {
     "electron": "^17.0.1"
+  },
+  "dependencies": {
+    "jquery": "^3.6.0",
+    "node-fetch": "^2.6.1",
+    "node-localstorage": "^2.2.1"
   }
 }
