@@ -26,20 +26,7 @@ const createWindow = (width, height) => {
 
 app.whenReady().then(() => {
     const window = createWindow(1280, 800);
-
-    if (localStorage.getItem("code"))
-        window.loadFile('static/index.html');
-    else {
-        fetch('https://api-bta.tk/auth/register', {
-            method: 'POST'
-        }).then((response) => {
-            response.text().then((text) => {
-                localStorage.setItem('code', JSON.parse(text).code);
-            });
-        }).then(() => {
-            window.loadFile('static/index.html');
-        });
-    }
+    window.loadFile('static/index.html');
 });
 
 app.on('window-all-closed', () => {
