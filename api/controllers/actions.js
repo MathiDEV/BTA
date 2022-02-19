@@ -92,3 +92,14 @@ exports.trigger_down = (req, res, next) => {
         })
     }
 }
+
+exports.getXml = (req, res, next) => {
+    db.execute('SELECT block FROM `actions` WHERE id = ?',  [req.body.id], function (err, results, fields) {
+        if (results[0]) {
+            res.status(200).json(results);
+            return
+        }
+        else
+            res.status(400).json({ error: "error" });
+    })
+}
