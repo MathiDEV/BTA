@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Blockly Demo: Toolbox</title>
+    <script src="blockly_compressed.js"></script>
+    <script src="blocks_compressed.js"></script>
+    <script src="blocks.js"></script>
+    <script src="generator.js"></script>
+    <script src="theme.js"></script>
+    <script src="save_restore.js"></script>
+    <script src="msg/js/fr.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=PT+Sans&display=swap');
+
+        body {
+            margin: 0;
+        }
+
+        * {
+            font-family: 'PT Sans', sans-serif !important;
+        }
+
+        .blocklyTreeLabel {
+            vertical-align: top !important;
+        }
+
+        h1 {
+            font-weight: normal;
+            font-size: 140%;
+        }
+
+        .blocklyPathLight,
+        .blocklyPathDark {
+            display: none;
+        }
+
+        #blocklyDiv {
+            width: 100vw;
+            height: 100vh;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="blocklyDiv"></div>
+
+    <xml xmlns="https://developers.google.com/blockly/xml" id="toolbox" style="display: none">
+        <category name="Triggers" colour="#f5aa42">
+            <block type="trigger_block"></block>
+            <block type="trigger_manually"></block>
+            <block type="event_group"></block>
+            <block type="evt_any_key"></block>
+            <block type="evt_typed"></block>
+            <block type="evt_inactivity"></block>
+            <block type="evt_hours"></block>
+            <block type="evt_minutes"></block>
+            <block type="evt_process"></block>
+        </category>
+        <category name="Conditions/Loops" colour="#3399ff">
+            <block type="if_event"></block>
+            <block type="repeat_event"></block>
+            <block type="wait"></block>
+        </category>
+        <category name="Actions" colour="#7a33ff">
+            <block type="act_lock"></block>
+            <block type="act_picture"></block>
+            <block type="act_rickroll"></block>
+            <block type="act_sound"></block>
+            <block type="act_send_keys"></block>
+            <block type="act_write"></block>
+            <block type="act_shell_run"></block>
+            <block type="act_python"></block>
+        </category>
+    </xml>
+
+    <script>
+        var demoWorkspace = Blockly.inject('blocklyDiv', {
+            media: 'media/',
+            toolbox: document.getElementById('toolbox'),
+            theme: Blockly.Themes.Halloween
+        });
+    </script>
+</body>
+
+</html>

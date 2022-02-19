@@ -1,0 +1,20 @@
+#my-automations {
+    padding: 10px;
+}
+
+#my-automations .automation-card {
+    padding: 20px;
+    margin: 10px 0;
+    min-height: 200px;
+    background-image: linear-gradient(-120deg, rgba(0, 0, 0, 0.5) 0%, rgba(255, 255, 255, 0) 100%);
+    border-radius: 20px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+}
+
+#my-automations .automation-card p {
+    color: white;
+    font-size: 30px;
+    margin: 0;
+}

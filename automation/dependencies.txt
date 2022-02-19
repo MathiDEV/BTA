@@ -1,0 +1,2 @@
+apt : 
+sudo apt-get install gnome-screensaver
