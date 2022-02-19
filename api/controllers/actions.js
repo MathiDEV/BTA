@@ -75,7 +75,7 @@ exports.getAllAutomation_m = (req, res, next) => {
         })
 
     }
-
+}
 
 exports.trigger_up = (req, res, next) => {
     const code = req.body.code
