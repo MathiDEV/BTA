@@ -10,7 +10,7 @@ exports.register = (req, res, next) => {
             return
         }
         else
-            res.status(400).json({ error: "bad id, retry" });
+            res.status(400).json([]);
     })
 }
 
@@ -22,7 +22,7 @@ exports.getAllCodes = (req, res, next) => {
             return
         }
         else
-            res.status(400).json({ error: "error" });
+        res.status(400).json([]);
     })
 }
 
@@ -35,7 +35,7 @@ exports.connect = (req, res, next) => {
         db.execute('SELECT * FROM `code_digit` WHERE code = (?)', [code], function (err, results, fields) {
             if (results[0]) {
                 res.status(200).json(true);
-                return  
+                return
             }
             else
                 res.status(400).json(false);

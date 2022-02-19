@@ -26,13 +26,15 @@ exports.add = (req, res, next) => {
                         res.status(201).json({ name: name, color: color, action: action, block: block, id: results.insertId });
                     }
                     else
-                        res.status(400).json({ msg: "error processing" });
+                        res.status(400).json([]);
                 })
             } else {
-                res.st0atus(400).json({ msg: "Unknown code" });
+                res.status(400).json([]);
             }
 
         })
+    } else {
+        res.status(400).json([]);
     }
 }
 
@@ -56,9 +58,11 @@ exports.getAllAutomation = (req, res, next) => {
                 res.status(202).json(results);
             }
             else
-                res.status(400).json({ msg: "error processing" });
+                res.status(400).json([]);
         })
 
+    } else {
+        res.status(400).json([]);
     }
 }
 
@@ -71,9 +75,10 @@ exports.getAllAutomation_m = (req, res, next) => {
                 res.status(202).json(results);
             }
             else
-                res.status(400).json({ msg: "error processing" });
+                res.status(400).json([]);
         })
-
+    } else {
+        res.status(400).json([]);
     }
 }
 
@@ -87,9 +92,11 @@ exports.trigger_up = (req, res, next) => {
                 res.status(200).json({ msg: "ok" });
             }
             else
-                res.status(400).json({ msg: "error processing" });
+                res.status(400).json([]);
         })
 
+    } else {
+        res.status(400).json([]);
     }
 }
 
@@ -100,22 +107,24 @@ exports.trigger_down = (req, res, next) => {
             const row = results
             db.execute('UPDATE `actions` SET is_active = 0 WHERE code = ? AND is_active = 1', [code], function (err, results, fields) {
                 if (results.affectedRows != 0) {
-                    res.status(200).json( row );
+                    res.status(200).json(row);
                 }
                 else
-                    res.status(400).json({ msg: "error processing" });
+                    res.status(400).json([]);
             })
         })
+    } else {
+        res.status(400).json([]);
     }
 }
 
 exports.getXml = (req, res, next) => {
-    db.execute('SELECT block FROM `actions` WHERE id = ?',  [req.body.id], function (err, results, fields) {
+    db.execute('SELECT block FROM `actions` WHERE id = ?', [req.body.id], function (err, results, fields) {
         if (results[0]) {
             res.status(200).json(results);
             return
         }
         else
-            res.status(400).json({ error: "error" });
+            res.status(400).json([]);
     })
 }
