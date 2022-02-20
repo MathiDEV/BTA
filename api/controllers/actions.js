@@ -49,7 +49,7 @@ exports.modify_base = (req, res, next) => {
             if (results[0]) {
                 db.execute('UPDATE `actions` SET name = (?), color = (?) WHERE code = ? AND id = (?)', [name, color, code, id], function (err, results, fields) {
                     if (results.affectedRows != 0) {
-                        res.status(200).json({ name: name, color: color, action: action, block: block, id: id });
+                        res.status(200).json({});
                     }
                     else
                         res.status(404).json([]);
@@ -73,7 +73,7 @@ exports.delete = (req, res, next) => {
             if (results[0]) {
                 db.execute('DELETE FRON `actions` WHERE code = ? AND id = (?)', [code, id], function (err, results, fields) {
                     if (results.affectedRows != 0) {
-                        res.status(200).json({ name: name, color: color, action: action, block: block, id: id });
+                        res.status(200).json({});
                     }
                     else
                         res.status(400).json([]);
@@ -99,7 +99,7 @@ exports.modify_core = (req, res, next) => {
             if (results[0]) {
                 db.execute('UPDATE `actions` SET action = (?), block = (?) WHERE code = ? AND id = (?)', [action, block, code, id], function (err, results, fields) {
                     if (results.affectedRows != 0) {
-                        res.status(201).json({ name: name, color: color, action: action, block: block, id: id });
+                        res.status(200).json({});
                     }
                     else
                         res.status(400).json([]);
