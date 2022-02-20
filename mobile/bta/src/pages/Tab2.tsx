@@ -1,5 +1,4 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
-import React, { useEffect, useState } from "react";
 import axios from "axios"
 import ExploreContainer from '../components/ExploreContainer';
 import './Tab2.css';
@@ -11,9 +10,9 @@ type Automation = {
     color: string;
     name: string;
 };
-automations: Automation[]
+var user_automations: Automation[]
 axios
-    .get('https://api-bta.tk/automations/actions',
+    .get('https://api-bta.tk/actions/automations_m',
         {
             params: {
                 code: "190688"
@@ -21,10 +20,8 @@ axios
         })
     .then(response => response.data)
     .then((data) => {
-        this.setState({ items: data.articles })
-        console.log(this.state.items)
+        user_automations = data
     })
-
 
 export const LoadBoxes: React.FC<{ automations: Automation[] }> = (props) => (
     <IonContent fullscreen>
@@ -53,7 +50,7 @@ const Tab2: React.FC = () => {
                     </IonToolbar>
                 </IonHeader>
                 <ExploreContainer name="Tab 2 page" />
-                <LoadBoxes automations={[{ id: 1, name: "Bonjour", color: "#ff0000" }, { id: 2, name: "Rickroll", color: "#ffff00" }]} />
+                <LoadBoxes automations={user_automations} />
             </IonContent>
         </IonPage>
     );
