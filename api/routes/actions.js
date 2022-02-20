@@ -10,4 +10,4 @@ router.get('/xml', actionCtrl.getXml)
 router.put('/trigger_up', actionCtrl.trigger_up)
 router.put('/trigger_down', actionCtrl.trigger_down)
 
-module.exports = router;  
+module.exports = router;
