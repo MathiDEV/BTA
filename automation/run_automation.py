@@ -8,7 +8,7 @@ from threading import Thread
 import subprocess
 import requests
 
-computer_code = "190688"
+computer_code = "258752"
 pressed_keys = ""
 pressed = False
 process = {}
@@ -60,7 +60,7 @@ def process_listener():
     global process
     temp_process = {}
     new_process = []
-    ex = subprocess.Popen(['sh', '../automation/src/get_process.sh'], stdout=subprocess.PIPE)
+    ex = subprocess.Popen(['sh', 'src/get_process.sh'], stdout=subprocess.PIPE)
     std, _ = ex.communicate()
     for proc in std.decode().splitlines():
         if proc.startswith("kworker"):
@@ -160,6 +160,8 @@ counter = 0
 while (True):
     if counter == 10:
         refresh_automations()
+        print(user_automations)
+        counter = 0
     now = datetime.now()
     if monitor.get_idle_time() < last_values["inactivity"]:
         reset_cond("inactivity")
