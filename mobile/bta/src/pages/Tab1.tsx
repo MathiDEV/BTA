@@ -2,13 +2,10 @@ import { IonInput, IonItem, IonIcon, IonButton, IonContent, IonHeader, IonList, 
 import './Tab1.css';
 import { chevronForwardOutline } from 'ionicons/icons';
 import React, { useState } from 'react';
-import './api-relation'
-import { useFetch } from './api-relation';
 
 const Tab1: React.FC = () => {
 
  const [number, setNumber] = useState<number>();
- const { data, refetch } = useFetch(number);
 
  return (
    <IonPage>
@@ -32,7 +29,7 @@ const Tab1: React.FC = () => {
      <IonItem>
            <IonInput type="number" value={number} placeholder="Enter Number" onIonChange={e => setNumber(parseInt(e.detail.value!, 10))}></IonInput>
          </IonItem>
-       <IonButton onClick={refetch}>
+       <IonButton>
          <IonIcon slot="end" icon={chevronForwardOutline} />
            Continue
        </IonButton>
@@ -40,6 +37,5 @@ const Tab1: React.FC = () => {
    </IonPage>
  );
 };
- 
+
 export default Tab1;
-	
