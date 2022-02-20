@@ -7,7 +7,7 @@ all the endpoints
     - GET **/** (to get all the codes)
     - POST **/register** (to create a brand new code)
     - POST **/connect** (to check if a code given as parameter is found inside the DB)
-    - POST **/regenerate** (to regenerate a code)
+    - PUT **/regenerate** (to regenerate a code)
 - /actions
     - POST **/add** (to add a new action to the db, inform the name, the action (JSON FORMAT) a block (XML FORMAT) and your code)
     - GET **/** (get all the actions)
