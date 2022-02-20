@@ -23,10 +23,10 @@ exports.add = (req, res, next) => {
             if (results[0]) {
                 db.execute('INSERT INTO `actions` (name, color, action, block, code) VALUES (?, ?, ?, ?, ?)', [name, color, action, block, code], function (err, results, fields) {
                     if (!err) {
-                        res.status(201).json({ name: name, color: color, action: action, block: block, id: results.insertId });
+                        res.status(200).json({ name: name, color: color, action: action, block: block, id: results.insertId });
                     }
                     else
-                        res.status(400).json([]);
+                        res.status(404).json([]);
                 })
             } else {
                 res.status(400).json([]);
@@ -49,13 +49,37 @@ exports.modify_base = (req, res, next) => {
             if (results[0]) {
                 db.execute('UPDATE `actions` SET name = (?), color = (?) WHERE code = ? AND id = (?)', [name, color, code, id], function (err, results, fields) {
                     if (results.affectedRows != 0) {
-                        res.status(201).json({ name: name, color: color, action: action, block: block, id: id });
+                        res.status(200).json({ name: name, color: color, action: action, block: block, id: id });
+                    }
+                    else
+                        res.status(404).json([]);
+                })
+            } else {
+                res.status(400).json([]);
+            }
+
+        })
+    } else {
+        res.status(400).json([]);
+    }
+}
+
+exports.delete = (req, res, next) => {
+    const id = req.body.id
+    const code = req.body.code
+
+    if (check_validity(action) && check_validity(id) && check_validity(code) && check_validity(block)) {
+        db.execute('SELECT * FROM `actions` WHERE code = (?) AND id = (?)', [code, id], function (err, results, fields) {
+            if (results[0]) {
+                db.execute('DELETE FRON `actions` WHERE code = ? AND id = (?)', [code, id], function (err, results, fields) {
+                    if (results.affectedRows != 0) {
+                        res.status(200).json({ name: name, color: color, action: action, block: block, id: id });
                     }
                     else
                         res.status(400).json([]);
                 })
             } else {
-                res.status(400).json([]);
+                res.status(40).json([]);
             }
 
         })
