@@ -1,0 +1,21 @@
+#wifiIcon {
+    font-size: 300px;
+    display: block;
+    margin: auto;
+}
+
+#wifiIcon + p {
+    text-align: center;
+    font-size: 20px;
+    padding: 10px
+}
+
+#continueButton {
+    display: block;
+    margin: 10px auto 0;
+    width: fit-content;
+}
+
+#userCode {
+    text-align: center;
+}

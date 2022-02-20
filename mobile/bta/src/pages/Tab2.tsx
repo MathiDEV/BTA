@@ -11,9 +11,21 @@ type Automation = {
     name: string;
 };
 
+const myCode = localStorage.getItem("code")
+
+const CheckConnect = () => {
+    return axios({
+        url: 'https://api-bta.tk/auth/connect',
+        method: 'post',
+        data: {
+            code: myCode,
+        },
+    })
+}
+
 const getAutomations = () => {
     let data = {
-        code: "190688"
+        code: myCode
     }
     return axios({
         url: 'https://api-bta.tk/actions/automations_m',
@@ -24,12 +36,24 @@ const getAutomations = () => {
     })
 };
 
+const triggerAutomations = (e : EventTarget) => {
+    let data = {
+        id: (e as HTMLElement).getAttribute('auto-id'),
+        code: myCode,
+    }
+    return axios({
+        url: 'https://api-bta.tk/actions/trigger_up',
+        method: 'put',
+        data: data,
+    })
+};
+
 
 export const LoadBoxes: React.FC<{ automations: Automation[] }> = (props) => (
     <IonContent fullscreen>
         <div id="my-automations">
             {props.automations.map((auto, i) => (
-                <div className="automation-card" auto-id={auto.id} style={{ "backgroundColor": auto.color }}>
+                <div onClick={(e) => {triggerAutomations(e.target)}} className="automation-card" auto-id={auto.id} style={{ "backgroundColor": auto.color }}>
                     <p>{auto.name}</p>
                 </div>
             ))}
@@ -42,6 +66,9 @@ const Tab2: React.FC = () => {
     React.useEffect(() => {
         getAutomations().then(data => setItems(data));
     }, []);
+    CheckConnect().catch((data) => {
+            document.location.href = "tab1"
+        })
     return (
         <IonPage>
             <IonHeader>

@@ -10,6 +10,8 @@ import {
     setupIonicReact
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
+import axios from "axios"
+import { useHistory } from "react-router-dom";
 import { ellipse, square, triangle } from 'ionicons/icons';
 import Tab1 from './pages/Tab1';
 import Tab2 from './pages/Tab2';
@@ -33,11 +35,14 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
+import React from 'react';
+
 
 setupIonicReact();
 
-const App: React.FC = () => (
-    <IonApp>
+
+const App: React.FC = () => {
+    return (<IonApp>
         <IonReactRouter>
             <IonRouterOutlet>
                 <Route exact path="/tab1">
@@ -46,15 +51,12 @@ const App: React.FC = () => (
                 <Route exact path="/tab2">
                     <Tab2 />
                 </Route>
-                <Route path="/tab3">
-                    <Tab3 />
-                </Route>
                 <Route exact path="/">
-                    <Redirect to="/tab1" />
+                    <Tab1 />
                 </Route>
             </IonRouterOutlet>
         </IonReactRouter>
-    </IonApp>
-);
+    </IonApp>)
+};
 
 export default App;
