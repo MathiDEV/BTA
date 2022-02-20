@@ -81,6 +81,7 @@
             body: JSON.stringify(my_body),
         }).then((response) => {
             console.log(response);
+            document.location.href = '../static/index.html';
         });
     }
 
@@ -117,7 +118,7 @@
         }).then((response) => {
             response.text().then((text) => {
                 console.log(text);
-                // document.location.href = '../static/index.html';
+                document.location.href = '../static/index.html';
             });
         });
     }
