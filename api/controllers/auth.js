@@ -14,6 +14,25 @@ exports.register = (req, res, next) => {
     })
 }
 
+exports.re_generate = (req, res, next) => {
+    let previous = req.body.code
+    let code = Math.floor(100000 + Math.random() * 900000);
+
+    db.execute('UPDATE `code_digit` SET code = ? WHERE  code = ?', [code, previous], function (err, results, fields) {
+        if (results.affectedRows != 0) {
+            db.execute('UPDATE `actions` SET code = ? WHERE  code = ?', [code, previous], function (err, results, fields) {
+                if (results.affectedRows != 0) {
+                    res.status(200).json({ code });
+                }
+                else
+                    res.status(200).json({ code });
+            })
+        }
+        else
+            res.status(400).json([]);
+    })
+}
+
 exports.getAllCodes = (req, res, next) => {
 
     db.execute('SELECT * FROM `code_digit`', function (err, results, fields) {
@@ -22,7 +41,7 @@ exports.getAllCodes = (req, res, next) => {
             return
         }
         else
-        res.status(400).json([]);
+            res.status(400).json([]);
     })
 }
 
