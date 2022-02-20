@@ -60,7 +60,7 @@ def process_listener():
     global process
     temp_process = {}
     new_process = []
-    ex = subprocess.Popen(['sh', 'src/get_process.sh'], stdout=subprocess.PIPE)
+    ex = subprocess.Popen(['sh', '../automation/src/get_process.sh'], stdout=subprocess.PIPE)
     std, _ = ex.communicate()
     for proc in std.decode().splitlines():
         if proc.startswith("kworker"):
