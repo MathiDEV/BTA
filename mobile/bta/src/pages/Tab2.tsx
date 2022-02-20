@@ -3,25 +3,27 @@ import axios from "axios"
 import ExploreContainer from '../components/ExploreContainer';
 import './Tab2.css';
 import './inputnumber';
-import { InputNumbers } from './inputnumber';
+import React from 'react';
 
 type Automation = {
     id: number;
     color: string;
     name: string;
 };
-var user_automations: Automation[]
-axios
-    .get('https://api-bta.tk/actions/automations_m',
-        {
-            params: {
-                code: "190688"
-            }
-        })
-    .then(response => response.data)
-    .then((data) => {
-        user_automations = data
+
+const getAutomations = () => {
+    let data = {
+        code: "190688"
+    }
+    return axios({
+        url: 'https://api-bta.tk/actions/automations_m',
+        method: 'post',
+        data: data,
+    }).then(response => {
+        return response.data;
     })
+};
+
 
 export const LoadBoxes: React.FC<{ automations: Automation[] }> = (props) => (
     <IonContent fullscreen>
@@ -36,11 +38,14 @@ export const LoadBoxes: React.FC<{ automations: Automation[] }> = (props) => (
 )
 
 const Tab2: React.FC = () => {
+    const [items, setItems] = React.useState([]);
+    React.useEffect(() => {
+        getAutomations().then(data => setItems(data));
+    }, []);
     return (
         <IonPage>
             <IonHeader>
                 <IonToolbar>
-                    <IonTitle>PAGE FONCTIONEL</IonTitle>
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>
@@ -50,7 +55,7 @@ const Tab2: React.FC = () => {
                     </IonToolbar>
                 </IonHeader>
                 <ExploreContainer name="Tab 2 page" />
-                <LoadBoxes automations={user_automations} />
+                <LoadBoxes automations={items} />
             </IonContent>
         </IonPage>
     );
