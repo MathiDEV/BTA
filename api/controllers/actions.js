@@ -58,11 +58,11 @@ exports.getAllAutomation = (req, res, next) => {
                 res.status(202).json(results);
             }
             else
-                res.status(400).json([]);
+                res.status(404).json([]);
         })
 
     } else {
-        res.status(400).json([]);
+        res.status(400).json(req.body);
     }
 }
 
