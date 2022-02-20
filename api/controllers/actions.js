@@ -47,7 +47,7 @@ exports.modify_base = (req, res, next) => {
     if (check_validity(name) && check_validity(id) && check_validity(code) && check_validity(color)) {
         db.execute('SELECT * FROM `actions` WHERE code = ? AND id = ?', [code, id], function (err, results, fields) {
             if (results && results[0]) {
-                db.execute('UPDATE `actions` SET name = (?), color = (?) WHERE code = ? AND id = (?)', [name, color, code, id], function (err, results, fields) {
+                db.execute('UPDATE `actions` SET name = ?, color = ? WHERE code = ? AND id = ?', [name, color, code, id], function (err, results, fields) {
                     if (results.affectedRows != 0) {
                         res.status(200).json({});
                     }
@@ -68,18 +68,18 @@ exports.delete = (req, res, next) => {
     const id = req.body.id
     const code = req.body.code
 
-    if (check_validity(action) && check_validity(id) && check_validity(code) && check_validity(block)) {
-        db.execute('SELECT * FROM `actions` WHERE code = (?) AND id = (?)', [code, id], function (err, results, fields) {
-            if (results[0]) {
-                db.execute('DELETE FRON `actions` WHERE code = ? AND id = (?)', [code, id], function (err, results, fields) {
-                    if (results.affectedRows != 0) {
+    if (check_validity(id) && check_validity(code)) {
+        db.execute('SELECT * FROM `actions` WHERE code = ? AND id = ?', [code, id], function (err, results, fields) {
+            if (results && results[0]) {
+                db.execute('DELETE FROM `actions` WHERE code = ? AND id = ?', [code, id], function (err, results, fields) {
+                    if (!err) {
                         res.status(200).json({});
                     }
                     else
                         res.status(400).json([]);
                 })
             } else {
-                res.status(40).json([]);
+                res.status(400).json([]);
             }
 
         })
@@ -179,7 +179,7 @@ exports.trigger_up = (req, res, next) => {
 exports.trigger_down = (req, res, next) => {
     const code = req.body.code
     if (check_validity(code)) {
-        db.execute('SELECT id, actions FROM `actions` WHERE  code = ? AND is_active = 1', [code], function (err, results, fields) {
+        db.execute('SELECT id FROM `actions` WHERE  code = ? AND is_active = 1', [code], function (err, results, fields) {
             const row = results
             db.execute('UPDATE `actions` SET is_active = 0 WHERE code = ? AND is_active = 1', [code], function (err, results, fields) {
                 if (results.affectedRows != 0) {
