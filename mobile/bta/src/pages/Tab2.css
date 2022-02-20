@@ -11,6 +11,12 @@
     display: flex;
     align-items: flex-end;
     justify-content: flex-end;
+    transition: transform .3s, opacity .3s;
+}
+
+#my-automations .automation-card:active {
+    transform: scale(0.9);
+    opacity: 0.7;
 }
 
 #my-automations .automation-card p {
