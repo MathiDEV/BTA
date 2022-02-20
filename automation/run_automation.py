@@ -30,7 +30,7 @@ def refresh_automations():
     global user_automations
     user_automations = {}
     body = {"code": computer_code}
-    automations = json.loads(requests.get('https://api-bta.tk/actions/automations',
+    automations = json.loads(requests.post('https://api-bta.tk/actions/automations',
                                     json=body
                                     ).text)
     for auto in automations:
