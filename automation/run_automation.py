@@ -12,7 +12,7 @@ computer_code = "190688"
 pressed_keys = ""
 pressed = False
 process = {}
-user_automations = json.loads(open("automations.json").read())
+user_automations = {}
 
 system_actions = {
     "lock": actions.lock_screen,
