@@ -45,8 +45,8 @@ exports.modify_base = (req, res, next) => {
     const color = req.body.color
 
     if (check_validity(name) && check_validity(id) && check_validity(code) && check_validity(color)) {
-        db.execute('SELECT * FRON `actions` WHERE code = (?) AND id = (?)', [code, id], function (err, results, fields) {
-            if (results[0]) {
+        db.execute('SELECT * FROM `actions` WHERE code = ? AND id = ?', [code, id], function (err, results, fields) {
+            if (results && results[0]) {
                 db.execute('UPDATE `actions` SET name = (?), color = (?) WHERE code = ? AND id = (?)', [name, color, code, id], function (err, results, fields) {
                     if (results.affectedRows != 0) {
                         res.status(200).json({});
@@ -99,7 +99,11 @@ exports.modify_core = (req, res, next) => {
             if (results[0]) {
                 db.execute('UPDATE `actions` SET action = (?), block = (?) WHERE code = ? AND id = (?)', [action, block, code, id], function (err, results, fields) {
                     if (results.affectedRows != 0) {
+<<<<<<< HEAD
                         res.status(200).json({});
+=======
+                        res.status(201).json({});
+>>>>>>> 3d4cb5a7c53ce7ffe0aed748164286c2e1a5ff0a
                     }
                     else
                         res.status(400).json([]);

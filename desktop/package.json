@@ -10,6 +10,7 @@
   "author": "Léo Dubosclard & Mathias Andre",
   "license": "ISC",
   "devDependencies": {
+    "child_process": "^1.0.2",
     "electron": "^17.0.1"
   },
   "dependencies": {

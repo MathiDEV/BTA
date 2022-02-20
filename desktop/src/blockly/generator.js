@@ -145,4 +145,5 @@ function get_action() {
     json_object = json_object.replace(regex, '');
     json_object = JSON.parse(json_object);
     console.log(JSON.stringify(json_object))
+    return JSON.stringify(json_object);
 }

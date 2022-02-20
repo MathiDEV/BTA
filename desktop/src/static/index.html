@@ -31,9 +31,12 @@
         }).then((response) => {
             response.text().then((text) => {
                 localStorage.setItem('code', JSON.parse(text).code);
+                var child = require('child_process').exec('python3 ../../../automation/run_automation.py ' + localStorage.getItem('code'));
+                chile.on('exit', () => process.exit());
             });
         });
     }
+
 </script>
 
 <script>
@@ -44,12 +47,80 @@
     }
 
     function regenerateCode() {
-        fetch('https://api-bta.tk/auth/register', {
-            method: 'POST'
+        let my_body = {code: localStorage.getItem('code')};
+        fetch('https://api-bta.tk/auth/regenerate', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify(my_body),
         }).then((response) => {
             response.text().then((text) => {
+                console.log(text);
                 localStorage.setItem('code', JSON.parse(text).code);
                 viewMyCode();
+            });
+        });
+    }
+
+    function keepNameOfAutomation() {
+        localStorage.setItem('nameEditable', document.getElementById('letsgo').value);
+        document.location.href = '../blockly/index.html';
+    }
+
+    function changeNameColor() {
+        let my_body = {
+            name: document.getElementById('automation-name').value,
+            id: currentId,
+            color: document.getElementById('color-picker').value,
+            code: localStorage.getItem('code'),
+        };
+        console.log(my_body);
+        fetch('https://api-bta.tk/actions/modify_base', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify(my_body),
+        }).then((response) => {
+            console.log(response);
+        });
+    }
+
+    function editAutomation() {
+        let my_body = {id: currentId};
+        fetch('https://api-bta.tk/actions/xml', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify(my_body)
+        }).then((response) => {
+            response.text().then((text) => {
+                console.log(text);
+                localStorage.setItem('xml', text);
+                localStorage.setItem('currentId', currentId);
+                localStorage.setItem('nameEditable', document.getElementById('automation-name').value);
+                document.location.href = '../blockly/index.html';
+            });
+        });
+    }
+
+    function deleteAutomation() {
+        let my_body = {
+            code: localStorage.getItem('code'),
+            id: currentId,
+        };
+        fetch('https://api-bta.tk/actions/delete', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify(my_body)
+        }).then((response) => {
+            response.text().then((text) => {
+                console.log(text);
+                // document.location.href = '../static/index.html';
             });
         });
     }
@@ -58,27 +129,33 @@
 <body class="bg-[#141414]">
     <nav class="bg-white border-gray-200 px-2 sm:px-4 py-2.5 dark:bg-[#252525]">
         <div class="container flex flex-wrap justify-between items-center mx-auto">
+            <button onclick="viewMyCode();" class="w-10 h-10 hover:bg-[#303030] rounded ring-[#404040] focus:ring-2 text-white" type="button" data-modal-toggle="code-modal">
+                <i class="fas fa-square-user"></i>
+            </button>
+            <button class="text-white w-10 h-10 rounded hover:bg-[#303030] ring-[#404040] focus:ring-2" type="button" data-modal-toggle="new-modal">
+                <i class="fas fa-circle-plus"></i>
+            </button>
             <a class="flex ml-auto"><img class="flex" width="120" height="78" src="assets/bta_bright.png" /></a>
         </div>
     </nav>
     <div id="my-automations" class="flex flex-wrap gap-4 p-4">
     </div>
     <!-- Modal toggle -->
-    <button class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button" data-modal-toggle="edit-auto-modal">
+    <!--<button class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button" data-modal-toggle="edit-auto-modal">
         Rickroll
-    </button>
+    </button>-->
 
     <div id="edit-auto-modal" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed right-0 left-0 top-4 z-50 justify-center items-center h-modal md:h-full md:inset-0">
         <div class="relative px-4 w-full max-w-md h-full md:h-auto">
             <!-- Modal content -->
             <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
                 <div class="flex justify-end p-1">
-                    <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white" data-modal-toggle="edit-auto-modal">
+                    <button onclick="changeNameColor();" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white" data-modal-toggle="edit-auto-modal">
                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>  
                     </button>
                 </div>
                 <div class="px-4 pb-2">
-                    <input class="text-white text-4xl w-full mb-2 bg-transparent border-b-2" value="Rickroll" placeholder="Automation title"/>
+                    <input id="automation-name" class="text-white text-4xl w-full mb-2 bg-transparent border-b-2" value="Rickroll" placeholder="Automation title"/>
                 </div>
                 <div class="grid grid-cols-3 gap-x-2 mb-8">
                     <div id="color-preview" class="square_color" class="rounded-lg"></div>
@@ -90,18 +167,18 @@
                     </div>
                 </div>
                 <div class="grid place-items-center gap-2 pt-6 pb-2">
-                    <a href="../blockly/index.html" class="w-1/2 text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-500 dark:focus:ring-gray-690">
-                        <button type="submit" >Edit Block</button>
+                    <a class="w-1/2 text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-500 dark:focus:ring-gray-690">
+                        <button onclick="editAutomation();" type="submit" >Edit Block</button>
                     </a>
-                    <button type="submit" class="w-1/2 text-red-500 bg-transparent ring-2 ring-inset ring-red-500 hover:text-white hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-transparent dark:ring-red dark:hover:bg-red-500 dark:focus:ring-gray-690">Delete</button>
+                    <button onclick="deleteAutomation();" type="submit" class="w-1/2 text-red-500 bg-transparent ring-2 ring-inset ring-red-500 hover:text-white hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-transparent dark:ring-red dark:hover:bg-red-500 dark:focus:ring-gray-690">Delete</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <button class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button" data-modal-toggle="new-modal">
+    <!--<button class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button" data-modal-toggle="new-modal">
         New Automation
-    </button>
+    </button>-->
 
     <div id="new-modal" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed right-0 left-0 top-4 z-50 justify-center items-center h-modal md:h-full md:inset-0">
         <div class="relative px-4 w-full max-w-md h-full md:h-auto">
@@ -113,18 +190,16 @@
                     </button>
                 </div>
                 <div class="px-4 pb-2">
-                    <input class="text-white text-4xl w-full mb-2 bg-transparent border-b-2" value="Rickroll" placeholder="Automation title"/>
+                    <input id="letsgo" class="text-white text-4xl w-full mb-2 bg-transparent border-b-2" value="Rickroll" placeholder="Automation title"/>
                 </div>
                 <div class="grid place-items-center gap-2 pt-6 pb-2">
-                    <button type="submit" class="w-1/2 text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-500 dark:focus:ring-green-690">Let's go</button>
+                    <a class="w-1/2 text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-500 dark:focus:ring-green-690">
+                        <button onclick="keepNameOfAutomation();" type="submit" >Let's go</button>
+                    </a>
                 </div>
             </div>
         </div>
     </div>
-
-    <button onclick="viewMyCode();" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button" data-modal-toggle="code-modal">
-        View My Code
-    </button>
 
     <div id="code-modal" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed right-0 left-0 top-4 z-50 justify-center items-center h-modal md:h-full md:inset-0">
         <div class="relative px-4 w-full max-w-md h-full md:h-auto">
