@@ -13,6 +13,7 @@ all the endpoints
     - PUT **/modify_base** (modify the name and color of an action)
     - PUT **/modify_core** (modify the action (JSON) and the block (XML) of an action)
     - GET **/** (get all the actions)
+    - DELETE **/delete** (delete an action from the db)
     - POST **/automations** (get all the actions depending on a code)
     - POST **/automations_m** (get all the actions depending on a code for mobile version)
     - POST **/trigger_up** (modify to 1 the action depending on an id and a code)
